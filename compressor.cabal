@@ -26,6 +26,9 @@ source-repository head
 library
   exposed-modules:
       Compressor
+      ErrorHandling
+      GetArgs
+      Utils
   other-modules:
       Paths_compressor
   hs-source-dirs:

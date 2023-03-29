@@ -1,7 +1,14 @@
 module Main (main) where
 
 import Compressor
+import ErrorHandling
+import GetArgs
+
+import System.Exit
+import System.Environment
 
 main :: IO ()
 main = do
-    helloWorld
+    let list = ["-n", "-f", "-l"]
+    args <- getArgs :: IO [String]
+    if (errorHandling args list) == False then exitWith (ExitFailure 84) else (startCompressor (getColorNumber args) (getConvergence args) (getFileName args))
