@@ -7,24 +7,25 @@
 
 module Algorythm where
 
-import System.Random
-import Data.List.Split
+import Utils
 
-randomizeCentroids :: Int -> StdGen -> [[(Int, Int, Int)]]
-randomizeCentroids 0 gen = []
+import System.Random
+
+chunksOf :: Int -> [Int] -> [[Int]]
+chunksOf n [] = []
+chunksOf n numbers = take n numbers : chunksOf n (drop n numbers)
+
+randomizeCentroids :: Int -> StdGen -> [[Int]]
 randomizeCentroids i gen = do
     let randomNumbers = take (i * 3) $ randomRs (1, 255) gen
-    let chunks = chunksOf 3 randomNumbers
-        truple = map (\[x, y, z] -> (x, y, z)) chunks
-    return truple
+    chunksOf 3 randomNumbers
 
--- Change color of each pixels
-changeListPixels :: [[(Int, Int, Int)]] -> [[(Int, Int, Int)]] -> [[(Int, Int, Int)]]
+changeListPixels :: [[Int]] -> [[[Int]]] -> [[[Int]]]
 changeListPixels centroids pixels = pixels
 
---Move centroids at center of his pixels
-moveCentroids :: [[(Int, Int, Int)]] -> [[(Int, Int, Int)]] -> [[(Int, Int, Int)]]
+-- Move centroids at center of his pixels
+moveCentroids :: [[Int]] -> [[[Int]]] -> [[Int]]
 moveCentroids centroids pixels = centroids
 
-loopAlgo :: [[(Int, Int, Int)]] -> [[(Int, Int, Int)]] -> ([[(Int, Int, Int)]], [[(Int, Int, Int)]])
-loopAlgo centroids pixels = (centroids, pixels)
+loopAlgo :: [[Int]] -> [[[Int]]] -> Float -> ([[Int]], [[[Int]]])
+loopAlgo centroids pixels convergence = (centroids, pixels)

@@ -7,7 +7,21 @@
 
 module Display where
 
-displayResult :: ([[(Int, Int, Int)]], [[(Int, Int, Int)]]) -> IO ()
+import Utils
+
+displayPixels :: [[Int]] -> IO ()
+displayPixels [] = return ()
+displayPixels (x:xs) = do
+    putStr $ show (getElement x 0, getElement x 1)
+    putStr " "
+    putStrLn $ show (getElement x 2, getElement x 3, getElement x 4)
+    displayPixels xs
+
+displayResult :: ([[Int]], [[[Int]]]) -> IO ()
+displayResult ([], pixels) = return ()
 displayResult (centroids, pixels) = do
-    putStrLn $ unwords $ map show centroids
-    putStrLn $ unwords $ map show pixels
+    putStrLn "--"
+    putStrLn $ show (truple (head centroids))
+    putStrLn "-"
+    displayPixels (head pixels)
+    displayResult (tail centroids, tail pixels)
