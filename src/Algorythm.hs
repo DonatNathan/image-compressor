@@ -18,5 +18,13 @@ randomizeCentroids i gen = do
         truple = map (\[x, y, z] -> (x, y, z)) chunks
     return truple
 
--- loopAlgo :: [(a,b,c)] -> [a] -> [a]
--- loopAlgo (centroides) (pixels) = 
+-- Change color of each pixels
+changeListPixels :: [[(Int, Int, Int)]] -> [[(Int, Int, Int)]] -> [[(Int, Int, Int)]]
+changeListPixels centroids pixels = pixels
+
+--Move centroids at center of his pixels
+moveCentroids :: [[(Int, Int, Int)]] -> [[(Int, Int, Int)]] -> [[(Int, Int, Int)]]
+moveCentroids centroids pixels = centroids
+
+loopAlgo :: [[(Int, Int, Int)]] -> [[(Int, Int, Int)]] -> ([[(Int, Int, Int)]], [[(Int, Int, Int)]])
+loopAlgo centroids pixels = (centroids, pixels)

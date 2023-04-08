@@ -27,6 +27,7 @@ library
   exposed-modules:
       Algorythm
       Compressor
+      Display
       ErrorHandling
       GetArgs
       Utils
