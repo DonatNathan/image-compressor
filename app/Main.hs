@@ -10,6 +10,7 @@ module Main (main) where
 import Compressor
 import ErrorHandling
 import GetArgs
+import Algorythm
 
 import System.Exit
 import System.Environment
@@ -17,6 +18,8 @@ import System.Random
 
 main :: IO ()
 main = do
+    -- let list = [[4, 5, 5], [44, 5, 5], [12, 8, 9]]
+    -- print (map (\i -> i `div` (length list)) (addPixelsLists list))
     let list = ["-n", "-f", "-l"]
     args <- getArgs :: IO [String]
     gen <- newStdGen

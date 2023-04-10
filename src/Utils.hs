@@ -13,6 +13,7 @@ isNumber (i:str) =
     if (i > '9' || i < '0') && i /= '-' && i /= '.' then False else isNumber str
 
 getElement :: [Int] -> Int -> Int
+getElement [] i = 0
 getElement (x:xs) 0 = x
 getElement (x:xs) i = getElement xs (i - 1)
 

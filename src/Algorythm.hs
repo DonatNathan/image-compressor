@@ -20,12 +20,29 @@ randomizeCentroids i gen = do
     let randomNumbers = take (i * 3) $ randomRs (1, 255) gen
     chunksOf 3 randomNumbers
 
+checkConvergence :: [[Int]] -> [[[Int]]] -> Float -> Bool
+checkConvergence centroids pixels l = True
+
 changeListPixels :: [[Int]] -> [[[Int]]] -> [[[Int]]]
 changeListPixels centroids pixels = pixels
 
+addPixelsLists :: [[Int]] -> [Int]
+addPixelsLists [] = []
+addPixelsLists (x:end) | end == [] = x
+addPixelsLists (x:end) = zipWith (+) x (addPixelsLists end)
+
 -- Move centroids at center of his pixels
 moveCentroids :: [[Int]] -> [[[Int]]] -> [[Int]]
-moveCentroids centroids pixels = centroids
+moveCentroids [] [] = []
+moveCentroids (x:centroids) (y:pixels) = do
+    let result = (map (\i -> i `div` (length y)) (addPixelsLists y))
+    (if result /= [] then tail(tail(result)) else result) : moveCentroids centroids pixels
 
 loopAlgo :: [[Int]] -> [[[Int]]] -> Float -> ([[Int]], [[[Int]]])
-loopAlgo centroids pixels convergence = (centroids, pixels)
+loopAlgo centroids pixels convergence = do
+    let newPixels = changeListPixels centroids pixels
+    let newCentroids = (moveCentroids centroids pixels)
+    if checkConvergence centroids pixels convergence then 
+        (newCentroids, newPixels)
+    else
+        loopAlgo newCentroids newPixels convergence

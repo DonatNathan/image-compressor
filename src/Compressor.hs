@@ -18,7 +18,6 @@ import Data.List
 import Data.Char
 
 -- TODO End of Algo
--- TODO Display result
 -- TODO Condition d'arrêt Algo
 
 parseString :: String -> [Int]
