@@ -23,8 +23,22 @@ randomizeCentroids i gen = do
 checkConvergence :: [[Int]] -> [[[Int]]] -> Float -> Bool
 checkConvergence centroids pixels l = True
 
+getDistance :: [Int] -> [Int] -> Float
+getDistance x y = sqrt (fromIntegral (((getElement y 2) - (getElement x 2))^2 + ((getElement y 3) - (getElement x 3))^2 + ((getElement y 4) - (getElement x 4))^2) :: Float)
+
+--DON'T FORGET THAT PIXELS ARE FIVE ELEMENTS
+
+checkEachPixels :: [[Int]] -> [Int] -> (Int, Float) -> (Int, Float)
+checkEachPixels [] (list) (x, y) = (0, -1)
+checkEachPixels (f:centroids) (list) (x, y) = do
+    let old = checkEachPixels centroids list ((x + 1), y)
+    let result = getDistance f list
+    if  result < (snd old) || (snd old) == -1 then (x, result) else old
+
+-- Reassign pixels to centroids
 changeListPixels :: [[Int]] -> [[[Int]]] -> [[[Int]]]
-changeListPixels centroids pixels = pixels
+changeListPixels centroids [] = []
+changeListPixels centroids (x:pixels) = x : changeListPixels centroids pixels
 
 addPixelsLists :: [[Int]] -> [Int]
 addPixelsLists [] = []
