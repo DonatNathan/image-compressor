@@ -58,7 +58,7 @@ moveCentroids :: [[Int]] -> [[[Int]]] -> [[Int]]
 moveCentroids [] [] = []
 moveCentroids (x:centroids) (y:pixels) = do
     let result = (map (\i -> i `div` (length y)) (addPixelsLists y))
-    (if result /= [] then tail(tail(result)) else result) : moveCentroids centroids pixels
+    (if result /= [] then tail(tail(result)) else x) : moveCentroids centroids pixels
 
 createEmptyList :: [[Int]] -> [[[Int]]]
 createEmptyList [] = []
@@ -67,7 +67,7 @@ createEmptyList (f:centroids) = [[]] : createEmptyList centroids
 loopAlgo :: [[Int]] -> [[[Int]]] -> Float -> ([[Int]], [[[Int]]])
 loopAlgo centroids pixels convergence = do
     let newPixels = changeListPixels centroids pixels (createEmptyList centroids)
-    let newCentroids = (moveCentroids centroids pixels)
+    let newCentroids = (moveCentroids centroids newPixels)
     if checkConvergence centroids newCentroids convergence then 
         (newCentroids, newPixels)
     else
