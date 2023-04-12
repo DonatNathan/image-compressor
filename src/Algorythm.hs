@@ -21,9 +21,9 @@ randomizeCentroids i gen = do
     chunksOf 3 randomNumbers
 
 checkConvergence :: [[Int]] -> [[Int]] -> Float -> Bool
-checkConvergence centroids pixels l = True
--- checkConvergence [] [] l = False
--- checkConvergence (f:centroids) (g:pixels) l = if (getDistance f g) <= l then True else (checkConvergence centroids pixels l)
+-- checkConvergence centroids pixels l = True
+checkConvergence [] [] l = False
+checkConvergence (f:centroids) (g:pixels) l = if (getDistance f g) <= l then True else (checkConvergence centroids pixels l)
 
 getDistance :: [Int] -> [Int] -> Float
 getDistance x y = sqrt (fromIntegral (((getElement y 2) - (getElement x 2))^2 + ((getElement y 3) - (getElement x 3))^2 + ((getElement y 4) - (getElement x 4))^2) :: Float)
