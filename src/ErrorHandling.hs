@@ -15,7 +15,7 @@ errorHandlingColorNumber :: Int -> Bool
 errorHandlingColorNumber a = if a < 1 then False else True
 
 errorHandlingConvergence :: Float -> Bool
-errorHandlingConvergence b = if b < 0 || b > 1 then False else True
+errorHandlingConvergence b = if b < 0 then False else True
 
 errorHandlingFileName :: String -> Bool
 errorHandlingFileName c = if c == "error" then False else True

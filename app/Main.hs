@@ -11,6 +11,7 @@ import Compressor
 import ErrorHandling
 import GetArgs
 import Algorythm
+import Utils
 
 import System.Exit
 import System.Environment
@@ -18,12 +19,19 @@ import System.Random
 
 main :: IO ()
 main = do
-    -- let list = [[4, 5, 5], [44, 5, 5], [12, 8, 9]]
-    -- let result = checkEachPixels list [33, 10, 8] (0, 0)
+    -- let centroids = [[3, 4, 2], [12, 3, 3], [23, 56, 122]]
+    -- let list = [[[3, 4, 2]], [[13, 14, 12], [112, 13, 13], [123, 156, 122]], [[13, 45, 45], [234, 234, 23]]]
+    -- print (checkEachPixels centroids [13, 14, 12] (0, 0))
+    -- print (checkEachPixels centroids [112, 13, 13] (0, 0))
+    -- print (checkEachPixels centroids [123, 156, 122] (0, 0))
+    -- let list2 = [[], [], []]
+
+    -- let result = createEmptyList centroids
+    -- let result = changeListPixels centroids list list2
+    -- let result = setPixelInGoodList centroids list list2
+    -- let result = addElementInList 0 [8, 8, 8, 8, 8] list2
     -- print result
-    -- print (getDistance [12, 8, 9] [33, 10, 8])
-    -- let toto = map (map show) list
-    -- print toto
+    
     let list = ["-n", "-f", "-l"]
     args <- getArgs :: IO [String]
     gen <- newStdGen
