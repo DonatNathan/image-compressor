@@ -35,9 +35,6 @@ checkEachPixels (f:centroids) (list) (x, y) = do
     let result = getDistance f list
     if  result < (snd old) || (snd old) == -1 then (x, result) else old
 
---DON'T FORGET THAT PIXELS ARE FIVE ELEMENTS
--- Reassign pixels to centroids
-
 setPixelInGoodList :: [[Int]] -> [[Int]] -> [[[Int]]] -> [[[Int]]]
 setPixelInGoodList (centroids) [] new = new
 setPixelInGoodList centroids (x:pixels) new = setPixelInGoodList centroids pixels (addElementInList (fst (checkEachPixels centroids x (0, 0))) x new)
@@ -69,7 +66,7 @@ createEmptyList (f:centroids) = [[]] : createEmptyList centroids
 
 loopAlgo :: [[Int]] -> [[[Int]]] -> Float -> ([[Int]], [[[Int]]])
 loopAlgo centroids pixels convergence = do
-    let newPixels = changeListPixels centroids pixels [[], [], []]
+    let newPixels = changeListPixels centroids pixels (createEmptyList centroids)
     let newCentroids = (moveCentroids centroids pixels)
     if checkConvergence centroids newCentroids convergence then 
         (newCentroids, newPixels)
