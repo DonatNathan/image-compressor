@@ -7,28 +7,12 @@
 
 module Algorythm where
 
-import Utils
-
 import System.Random
 
 type Point = (Int, Int, Int)
 type Pixel = ((Int, Int), Point)
 type Cluster = [Pixel]
 type CentroidList = [Point]
-
-
--- addPixelsLists :: [[Int]] -> [Int]
--- addPixelsLists [] = []
--- addPixelsLists (x:end) | end == [] = x
--- addPixelsLists (x:end) = zipWith (+) x (addPixelsLists end)
-
--- -- Move centroids at center of his pixels
--- moveCentroids :: [[Int]] -> [[[Int]]] -> [[Int]]
--- moveCentroids [] [] = []
--- moveCentroids (x:centroids) (y:pixels) = do
---     let result = (map (\i -> i `div` (length y)) (addPixelsLists y))
---     (if result /= [] then tail(tail(result)) else x) : moveCentroids centroids pixels
-
 
 getClosestCentroid :: Pixel -> CentroidList -> Point
 getClosestCentroid (_, point) centroids = do
@@ -71,23 +55,3 @@ myAlgo centroids cluster convergence = do
         (newCentroids, newClusters)
     else
         myAlgo newCentroids cluster convergence
-
--- checkEachPixels :: [[Int]] -> [Int] -> (Int, Float) -> (Int, Float)
--- checkEachPixels [] (list) (x, y) = (0, -1)
--- checkEachPixels (f:centroids) (list) (x, y) = do
---     let old = checkEachPixels centroids list ((x + 1), y)
---     let result = getDistance f list
---     if  result < (snd old) || (snd old) == -1 then (x, result) else old
-
--- setPixelInGoodList :: [[Int]] -> [[Int]] -> [[[Int]]] -> [[[Int]]]
--- setPixelInGoodList (centroids) [] new = new
--- setPixelInGoodList centroids (x:pixels) new = setPixelInGoodList centroids pixels (addElementInList (fst (checkEachPixels centroids x (0, 0))) x new)
-
--- addElementInList :: Int -> [Int] -> [[[Int]]] -> [[[Int]]]
--- addElementInList rowIndex add lst =
---     let updatedRow = (getElementList lst rowIndex) ++ [add]
---     in take rowIndex lst ++ [updatedRow] ++ drop (rowIndex + 1) lst
-
--- changeListPixels :: [[Int]] -> [[[Int]]] -> [[[Int]]] -> [[[Int]]]
--- changeListPixels centroids [] new = new
--- changeListPixels centroids (x:pixels) new = changeListPixels centroids pixels (setPixelInGoodList centroids x new)

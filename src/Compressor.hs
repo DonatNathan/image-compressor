@@ -10,27 +10,12 @@ module Compressor where
 import ErrorHandling
 import Algorythm
 import Display
-import Utils
-import Control.Monad
 
+import Control.Monad
 import System.Exit
 import System.Random
 import Data.List
 import Data.Char
-
--- parseString :: String -> [Int]
--- parseString xs = case dropWhile (not . isDigit) xs of
---                      "" -> []
---                      ys -> let (n, rest) = span isDigit ys
---                            in read n : parseString rest
-
--- readPixels :: [String] -> [[Int]]
--- readPixels [] = []
--- readPixels (x:xs) = parseString x : readPixels xs
-
--- addEmptyList :: [[Int]] -> Int -> [[[Int]]]
--- addEmptyList list 0 = [list]
--- addEmptyList list i = [] : addEmptyList list (i - 1)
 
 getRandomTuple :: IO Point
 getRandomTuple = do

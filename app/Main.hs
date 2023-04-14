@@ -10,9 +10,6 @@ module Main (main) where
 import Compressor
 import ErrorHandling
 import GetArgs
-import Algorythm
-import Utils
-import Display
 
 import System.Exit
 import System.Environment
