@@ -14,13 +14,13 @@ import System.Environment
 errorHandlingColorNumber :: Int -> Bool
 errorHandlingColorNumber a = if a < 1 then False else True
 
-errorHandlingConvergence :: Float -> Bool
+errorHandlingConvergence :: Double -> Bool
 errorHandlingConvergence b = if b < 0 then False else True
 
 errorHandlingFileName :: String -> Bool
 errorHandlingFileName c = if c == "error" then False else True
 
-errorHandlingValues :: Int -> Float -> String -> Bool
+errorHandlingValues :: Int -> Double -> String -> Bool
 errorHandlingValues a b c = (errorHandlingColorNumber a) && (errorHandlingConvergence b) && (errorHandlingFileName c)
 
 errorHandling :: [String] -> [String] -> Bool

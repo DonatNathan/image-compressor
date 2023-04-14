@@ -11,9 +11,9 @@ getColorNumber :: [String] -> Int
 getColorNumber [] = -1
 getColorNumber (i:j:args) = if i == "-n" then read j :: Int else getColorNumber args
 
-getConvergence :: [String] -> Float
+getConvergence :: [String] -> Double
 getConvergence [] = -1
-getConvergence (i:j:args) = if i == "-l" then read j :: Float else getConvergence args
+getConvergence (i:j:args) = if i == "-l" then read j :: Double else getConvergence args
 
 getFileName :: [String] -> String
 getFileName [] = "error"
