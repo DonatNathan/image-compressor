@@ -44,8 +44,8 @@ randomizeCentroids i = sequence $ replicate i getRandomTuple
 getPixels :: [String] -> Cluster
 getPixels content = [] -- TODO
 
-startCompressor :: Int -> Double -> String -> StdGen -> IO ()
-startCompressor a b c gen = if (errorHandlingValues a b c) == False then exitWith(ExitFailure 84) else do
+startCompressor :: Int -> Double -> String -> IO ()
+startCompressor a b c = if (errorHandlingValues a b c) == False then exitWith(ExitFailure 84) else do
     
     content <- readFile c
     let myLines = lines content

@@ -16,13 +16,38 @@ type Pixel = ((Int, Int), Point)
 type Cluster = [Pixel]
 type CentroidList = [Point]
 
+
+-- addPixelsLists :: [[Int]] -> [Int]
+-- addPixelsLists [] = []
+-- addPixelsLists (x:end) | end == [] = x
+-- addPixelsLists (x:end) = zipWith (+) x (addPixelsLists end)
+
+-- -- Move centroids at center of his pixels
+-- moveCentroids :: [[Int]] -> [[[Int]]] -> [[Int]]
+-- moveCentroids [] [] = []
+-- moveCentroids (x:centroids) (y:pixels) = do
+--     let result = (map (\i -> i `div` (length y)) (addPixelsLists y))
+--     (if result /= [] then tail(tail(result)) else x) : moveCentroids centroids pixels
+
+
+getClosestCentroid :: Pixel -> CentroidList -> Point
+getClosestCentroid (_, point) centroids = do
+    let distances = map (\centroid -> distancePoints point centroid) centroids
+    let closestCentroid = head $ filter (\centroid -> distancePoints point centroid == (minimum distances)) centroids
+    closestCentroid
+
 -- Set points to a centroid
-createNewClusters :: Cluster -> CentroidList -> [Cluster] -- TODO
-createNewClusters cluster centroids = [cluster]
+createNewClusters :: Cluster -> CentroidList -> [Cluster]
+createNewClusters cluster centroids = map (\c -> filter (\pixel -> getClosestCentroid pixel centroids == c) cluster) centroids
 
 -- Find centroid of a cluster
-findCentroid :: Cluster -> Point -- TODO
-findCentroid cluster = (0, 0, 0)
+findCentroid :: Cluster -> Point
+findCentroid cluster = do
+    let len = fromIntegral $ length cluster
+    let x = sum $ map (\(_, (x, _, _)) -> fromIntegral x) cluster
+    let y = sum $ map (\(_, (_, y, _)) -> fromIntegral y) cluster
+    let z = sum $ map (\(_, (_, _, z)) -> fromIntegral z) cluster
+    (round $ x / len, round $ y / len, round $ z / len)
 
 -- Find centroid for each clusters
 findNewCentroids :: [Cluster] -> CentroidList
@@ -47,23 +72,6 @@ myAlgo centroids cluster convergence = do
     else
         myAlgo newCentroids cluster convergence
 
--- chunksOf :: Int -> [Int] -> [[Int]]
--- chunksOf n [] = []
--- chunksOf n numbers = take n numbers : chunksOf n (drop n numbers)
-
--- randomizeCentroids :: Int -> StdGen -> CentroidList
--- randomizeCentroids i gen = do
---     let randomNumbers = take (i * 3) $ randomRs (1, 255) gen
---     chunksOf 3 randomNumbers
-
--- checkConvergence :: [[Int]] -> [[Int]] -> Float -> Bool
--- -- checkConvergence centroids pixels l = True
--- checkConvergence [] [] l = False
--- checkConvergence (f:centroids) (g:pixels) l = if (getDistance f g) <= l then True else (checkConvergence centroids pixels l)
-
--- getDistance :: [Int] -> [Int] -> Float
--- getDistance x y = sqrt (fromIntegral (((getElement y 2) - (getElement x 2))^2 + ((getElement y 3) - (getElement x 3))^2 + ((getElement y 4) - (getElement x 4))^2) :: Float)
-
 -- checkEachPixels :: [[Int]] -> [Int] -> (Int, Float) -> (Int, Float)
 -- checkEachPixels [] (list) (x, y) = (0, -1)
 -- checkEachPixels (f:centroids) (list) (x, y) = do
@@ -83,28 +91,3 @@ myAlgo centroids cluster convergence = do
 -- changeListPixels :: [[Int]] -> [[[Int]]] -> [[[Int]]] -> [[[Int]]]
 -- changeListPixels centroids [] new = new
 -- changeListPixels centroids (x:pixels) new = changeListPixels centroids pixels (setPixelInGoodList centroids x new)
-
--- addPixelsLists :: [[Int]] -> [Int]
--- addPixelsLists [] = []
--- addPixelsLists (x:end) | end == [] = x
--- addPixelsLists (x:end) = zipWith (+) x (addPixelsLists end)
-
--- -- Move centroids at center of his pixels
--- moveCentroids :: [[Int]] -> [[[Int]]] -> [[Int]]
--- moveCentroids [] [] = []
--- moveCentroids (x:centroids) (y:pixels) = do
---     let result = (map (\i -> i `div` (length y)) (addPixelsLists y))
---     (if result /= [] then tail(tail(result)) else x) : moveCentroids centroids pixels
-
--- createEmptyList :: [[Int]] -> [[[Int]]]
--- createEmptyList [] = []
--- createEmptyList (f:centroids) = [[]] : createEmptyList centroids
-
--- loopAlgo :: [[Int]] -> [[[Int]]] -> Float -> ([[Int]], [[[Int]]])
--- loopAlgo centroids pixels convergence = do
---     let newPixels = changeListPixels centroids pixels (createEmptyList centroids)
---     let newCentroids = (moveCentroids centroids newPixels)
---     if checkConvergence centroids newCentroids convergence then 
---         (newCentroids, newPixels)
---     else
---         loopAlgo newCentroids newPixels convergence

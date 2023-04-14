@@ -12,6 +12,7 @@ import ErrorHandling
 import GetArgs
 import Algorythm
 import Utils
+import Display
 
 import System.Exit
 import System.Environment
@@ -21,5 +22,4 @@ main :: IO ()
 main = do
     let list = ["-n", "-f", "-l"]
     args <- getArgs :: IO [String]
-    gen <- newStdGen
-    if (errorHandling args list) == False then exitWith (ExitFailure 84) else (startCompressor (getColorNumber args) (getConvergence args) (getFileName args) gen)
+    if (errorHandling args list) == False then exitWith (ExitFailure 84) else (startCompressor (getColorNumber args) (getConvergence args) (getFileName args))
