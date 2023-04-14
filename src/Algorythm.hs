@@ -16,17 +16,13 @@ type Pixel = ((Int, Int), Point)
 type Cluster = [Pixel]
 type CentroidList = [Point]
 
--- Get random centroids
-randomizeCentroids :: Int -> StdGen -> CentroidList
-randomizeCentroids i gen = [(0, 0, 0)] -- TODO
-
 -- Set points to a centroid
-createNewClusters :: Cluster -> CentroidList -> [Cluster]
-createNewClusters cluster centroids = [cluster] -- TODO
+createNewClusters :: Cluster -> CentroidList -> [Cluster] -- TODO
+createNewClusters cluster centroids = [cluster]
 
 -- Find centroid of a cluster
-findCentroid :: Cluster -> Point
-findCentroid cluster = (0, 0, 0) -- TODO
+findCentroid :: Cluster -> Point -- TODO
+findCentroid cluster = (0, 0, 0)
 
 -- Find centroid for each clusters
 findNewCentroids :: [Cluster] -> CentroidList
@@ -34,11 +30,12 @@ findNewCentroids clusters = map findCentroid clusters
 
 -- Get distance between two points (used on setPointsToCentroid and stop loop)
 distancePoints :: Point -> Point -> Double
-distancePoints (x1, y1, z1) (x2, y2, z2) = 0.0 -- TODO
+distancePoints (x1, y1, z1) (x2, y2, z2) = sqrt ((fromIntegral x2 - fromIntegral x1)^2 + (fromIntegral y2 - fromIntegral y1)^2 + (fromIntegral z2 - fromIntegral z1)^2)
 
 -- Test convergence
 isConvergence :: CentroidList -> CentroidList -> Double -> Bool
-isConvergence old new convergence = True -- TODO
+isConvergence [] [] convergence = False
+isConvergence (f:old) (g:new) convergence = if (distancePoints f g) <= convergence then True else (isConvergence old new convergence)
 
 -- Loop
 myAlgo :: CentroidList -> Cluster -> Double -> (CentroidList, [Cluster])
