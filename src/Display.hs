@@ -18,5 +18,18 @@ import Algorythm
 --     putStrLn $ show (getElement x 2, getElement x 3, getElement x 4)
 --     displayPixels xs
 
+-- displayResult :: ([[Int]], [[[Int]]]) -> IO ()
+-- displayResult ([], pixels) = return ()
+-- displayResult (centroids, pixels) = do
+--     putStrLn "--"
+--     putStrLn $ show (truple (head centroids))
+--     putStrLn "-"
+--     displayPixels (head pixels)
+--     displayResult (tail centroids, tail pixels)
+
+displayPixel :: Pixel -> IO ()
+displayPixel (pos, color) = putStrLn $ show pos ++ " " ++ show color
+
 displayResult :: (CentroidList, [Cluster]) -> IO ()
-displayResult (centroids, clusters) = putStrLn "Display" -- TODO
+displayResult ([], []) = return ()
+displayResult (f:centroids, (g:clusters)) = putStrLn "--" >> print f >> putStrLn "-" >> mapM_ displayPixel g >> displayResult (centroids, clusters)

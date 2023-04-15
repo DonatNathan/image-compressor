@@ -10,8 +10,8 @@ module Compressor where
 import ErrorHandling
 import Algorythm
 import Display
-import Utils
 
+import Control.Monad
 import System.Exit
 import System.Random
 import Data.List
@@ -40,6 +40,14 @@ fillCluster (x:xs) = fillPixel x : fillCluster xs
 -- addEmptyList :: [[Int]] -> Int -> [[[Int]]]
 -- addEmptyList list 0 = [list]
 -- addEmptyList list i = [] : addEmptyList list (i - 1)
+getRandomTuple :: IO Point
+getRandomTuple = do
+    [x, y, z] <- replicateM 3 (randomRIO (1, 255))
+    return (x, y, z)
+
+-- Get random centroids
+randomizeCentroids :: Int -> IO CentroidList
+randomizeCentroids i = sequence $ replicate i getRandomTuple
 
 
 getPixels :: [String] -> Cluster
@@ -48,12 +56,12 @@ getPixels line = do
     let list = readPixels line
     getPixels line
 
-startCompressor :: Int -> Double -> String -> StdGen -> IO ()
-startCompressor a b c gen = if (errorHandlingValues a b c) == False then exitWith(ExitFailure 84) else do
+startCompressor :: Int -> Double -> String -> IO ()
+startCompressor a b c = if (errorHandlingValues a b c) == False then exitWith(ExitFailure 84) else do
 
     content <- readFile c
     let myLines = lines content
     let pixels = getPixels myLines
-    let centroids = randomizeCentroids a gen
+    centroids <- randomizeCentroids a
     let result = myAlgo centroids pixels b
     displayResult result
