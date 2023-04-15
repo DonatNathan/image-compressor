@@ -50,18 +50,18 @@ randomizeCentroids :: Int -> IO CentroidList
 randomizeCentroids i = sequence $ replicate i getRandomTuple
 
 
-getPixels :: [String] -> Cluster
-getPixels [] = []
-getPixels line = do
-    let list = readPixels line
-    getPixels line
+-- getPixels :: [String] -> Cluster
+-- getPixels [] = []
+-- getPixels line = do
+--     let list = readPixels line
 
 startCompressor :: Int -> Double -> String -> IO ()
 startCompressor a b c = if (errorHandlingValues a b c) == False then exitWith(ExitFailure 84) else do
 
     content <- readFile c
     let myLines = lines content
-    let pixels = getPixels myLines
+    let cluster = readPixels myLines
+    let pixels = fillCluster cluster
     centroids <- randomizeCentroids a
     let result = myAlgo centroids pixels b
     displayResult result
