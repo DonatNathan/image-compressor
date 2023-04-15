@@ -1,9 +1,9 @@
---
+{-
 -- EPITECH PROJECT, 2023
 -- B-FUN-400-LYN-4-1-compressor-nathan.donat-filliod
 -- File description:
 -- Algorythm
---
+-}
 
 module Algorythm where
 
@@ -39,12 +39,17 @@ findNewCentroids clusters = map findCentroid clusters
 
 -- Get distance between two points (used on setPointsToCentroid and stop loop)
 distancePoints :: Point -> Point -> Double
-distancePoints (x1, y1, z1) (x2, y2, z2) = sqrt ((fromIntegral x2 - fromIntegral x1)^2 + (fromIntegral y2 - fromIntegral y1)^2 + (fromIntegral z2 - fromIntegral z1)^2)
+distancePoints (x1, y1, z1) (x2, y2, z2) =
+    sqrt ((fromIntegral x2 - fromIntegral x1)^2 + 
+          (fromIntegral y2 - fromIntegral y1)^2 +
+          (fromIntegral z2 - fromIntegral z1)^2)
 
 -- Test convergence
 isConvergence :: CentroidList -> CentroidList -> Double -> Bool
 isConvergence [] [] convergence = False
-isConvergence (f:old) (g:new) convergence = if (distancePoints f g) <= convergence then True else (isConvergence old new convergence)
+isConvergence (f:old) (g:new) convergence =
+    if (distancePoints f g) <= convergence then True
+    else (isConvergence old new convergence)
 
 -- Loop
 myAlgo :: CentroidList -> Cluster -> Double -> (CentroidList, [Cluster])

@@ -1,19 +1,21 @@
---
+{-
 -- EPITECH PROJECT, 2023
 -- B-FUN-400-LYN-4-1-compressor-nathan.donat-filliod
 -- File description:
 -- GetArgs
---
+-}
 
 module GetArgs where
 
-getColorNumber :: [String] -> Int
-getColorNumber [] = -1
-getColorNumber (i:j:args) = if i == "-n" then read j :: Int else getColorNumber args
+getColor :: [String] -> Int
+getColor [] = -1
+getColor (i:j:args) =
+    if i == "-n" then read j :: Int else getColor args
 
-getConvergence :: [String] -> Double
-getConvergence [] = -1
-getConvergence (i:j:args) = if i == "-l" then read j :: Double else getConvergence args
+getConv :: [String] -> Double
+getConv [] = -1
+getConv (i:j:args) =
+    if i == "-l" then read j :: Double else getConv args
 
 getFileName :: [String] -> String
 getFileName [] = "error"
