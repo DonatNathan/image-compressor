@@ -49,6 +49,13 @@ randomizeCentroids i = sequence $ replicate i getRandomTuple
 aPixForCentroid :: CentroidList -> Cluster -> (CentroidList, [Cluster])
 aPixForCentroid centroids cluster = (centroids, map (:[]) cluster)
 
+setupAlgo :: CentroidList -> Cluster -> Double -> IO ()
+setupAlgo centroids pixels b =
+    if (length pixels == length centroids) then
+        displayResult (aPixForCentroid centroids pixels)
+    else displayResult (myAlgo centroids pixels b)
+
+
 startCompressor :: Int -> Double -> String -> IO ()
 startCompressor a b c = if (errorHandlingValues a b c) == False
     then exitWith(ExitFailure 84) else do
@@ -57,6 +64,4 @@ startCompressor a b c = if (errorHandlingValues a b c) == False
     let cluster = readPixels myLines
     let pixels = fillCluster cluster
     centroids <- randomizeCentroids a
-    if (length pixels == length centroids) then
-        displayResult (aPixForCentroid centroids pixels)
-    else displayResult (myAlgo centroids pixels b)
+    setupAlgo centroids pixels b
