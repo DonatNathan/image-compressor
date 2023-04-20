@@ -49,10 +49,13 @@ randomizeCentroids i = sequence $ replicate i getRandomTuple
 aPixForCentroid :: CentroidList -> Cluster -> (CentroidList, [Cluster])
 aPixForCentroid centroids cluster = (centroids, map (:[]) cluster)
 
+resetCentroids :: (CentroidList, [Cluster]) -> (CentroidList, [Cluster])
+resetCentroids (centroid, clusters) = (findNewCentroids clusters, clusters)
+
 setupAlgo :: CentroidList -> Cluster -> Double -> IO ()
 setupAlgo centroids pixels b =
     if (length pixels == length centroids) then
-        displayResult (aPixForCentroid centroids pixels)
+        displayResult (resetCentroids (aPixForCentroid centroids pixels))
     else displayResult (myAlgo centroids pixels b)
 
 
