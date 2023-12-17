@@ -52,3 +52,25 @@ Branches | Lines
 ## Notes
 
 Very good project !
+
+## How to compile
+
+```
+make
+```
+
+## How to run
+
+```
+./convertImg <P> > imagePixels.txt
+./imageCompressor -n <N> -l <L> -f imagePixels.txt > newImagePixels.txt
+./xpmImg newImagePixels.txt > compressedImage.jpg
+```
+
+### Arguments
+
+Name | Signification
+--------------------
+N    | Number of colors
+L    | Convergence limit (0 < L > 1)
+P    | Path to image to compress
