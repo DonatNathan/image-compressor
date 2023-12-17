@@ -70,7 +70,7 @@ make
 ### Arguments
 
 Name | Signification
---------------------
+-----|--------------
 N    | Number of colors
 L    | Convergence limit (0 < L > 1)
 P    | Path to image to compress
