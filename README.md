@@ -53,10 +53,20 @@ Branches | Lines
 
 Very good project !
 
+## Haskell setup
+
+```
+sudo apt-get update
+curl -sSL https://get.haskellstack.org/ | sh
+sudo apt-get install g++ gcc libc6-dev libffi-dev libgmp-dev make xz-utils zlib1g-dev git gnupg netbase
+```
+
 ## How to compile
 
 ```
-make
+git clone git@github.com:DonatNathan/image-compressor.git
+cd image-compressor
+make all
 ```
 
 ## How to run
